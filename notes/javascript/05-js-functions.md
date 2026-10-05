@@ -1,0 +1,41 @@
+---
+id: js-functions
+title: Functions parameters arguments and return values
+track: javascript
+order: 5
+level: Foundation
+minutes: 1
+summary: Function — reusable kaam; inputs lo aur result return karo.
+tags: fundamentals, js, functions
+---
+
+## Quick revision
+
+- Function — reusable kaam; inputs lo aur result return karo.
+- Parameter — definition ka naam; argument — call ki actual value.
+- `return` — result deta hai aur function se turant bahar nikalta hai.
+- No return — normal function ka result `undefined` hota hai.
+- `console.log` — screen par dikhata hai; caller ko result return nahi karta.
+- Default parameter — argument missing/undefined ho tab default lagta hai.
+- Function declaration — apne scope mein declaration se pehle call ho sakti hai.
+- Arrow — concise function; apna `this` nahi hota.
+- Pure function — same input par same output; outside state change nahi karti.
+- Rest parameter — `(...args)` extra arguments ko array mein collect karta hai.
+- Higher-order function — function ko input le ya function return kare.
+- Early return — `return` ke baad same function ka remaining code skip hota hai.
+
+### Function style
+
+- Declarative — desired transformation bolo; unnecessary mutation se bacho.
+- Function expression — initialization se pehle call nahi; const/let TDZ aur var undefined ka behavior alag.
+- IIFE — function define karke turant call; isolated setup/scope ke liye.
+- Currying — f(a, b) ko f(a)(b) jaise staged calls mein badlo.
+- Callback — function ko baad mein invoke karne ke liye pass karo; fn aur fn() alag.
+
+## Sources — aur padhne ke liye
+
+- [MDN functions guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions)
+
+## Code practice
+
+- [Examples — jab code revise karna ho](../../examples/javascript/05-js-functions.md)

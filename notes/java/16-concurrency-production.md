@@ -1,0 +1,48 @@
+---
+id: java-concurrency-production
+title: Java concurrency under real resource limits
+track: java
+order: 16
+level: Advanced
+minutes: 2
+summary: Bounded pool — workers aur queue ki limit; overload par rejection/backpressure.
+tags: java, concurrency, virtual-threads, executors, backpressure
+---
+
+## Quick revision
+
+- Bounded pool — workers aur queue ki limit; overload par rejection/backpressure.
+- Deadline — poore operation ka time budget; har layer unlimited wait na kare.
+- Cancellation — future cancel karne se underlying I/O zaroor ruke, guarantee nahi.
+- Virtual thread — blocking concurrency cheap; database/remote capacity unlimited nahi.
+- Semaphore — scarce resource par concurrent access limit karo.
+- CompletableFuture — async composition; blocking work ke executor ka choice explicit rakho.
+- ThreadLocal — request data cleanup karo; reused threads par leakage ho sakti hai.
+- Shutdown — new work roko, in-flight work ko bounded wait, resources close.
+- CAS loop — compare-and-set fail ho toh latest state se retry; contention cost monitor.
+- CPU work — more threads se cores magically nahi badhte; oversubscription slow kar sakti hai.
+- Queue latency — service time ke saath waiting time include; throughput alone overload hide kar sakta hai.
+
+### Task coordination
+
+- BlockingQueue — producer/consumer handoff; put/take wait kar sakte hain, bounded capacity overload control karti hai.
+- CountDownLatch — count zero hone tak await; one-shot coordination, reset nahi hota.
+- CyclicBarrier — fixed group sab pahunchne tak wait; next round mein reuse ho sakta hai.
+- Phaser — multiple phases aur changing participant count ke liye flexible barrier.
+- ForkJoinPool — divide-and-conquer tasks ke liye work stealing; chhote independent subtasks useful.
+
+## Research notes: Virtual threads still need task ownership
+
+- Virtual threads har blocking task ke liye dedicated platform thread ke bina many tasks support karti hain.
+
+## Sources — aur padhne ke liye
+
+- [Oracle — concurrent utilities](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/concurrent/package-summary.html)
+
+- [Source yahan padho — Dev.java](https://dev.java/learn/new-features/virtual-threads/)
+- [Oracle virtual threads guide](https://docs.oracle.com/en/java/javase/26/core/virtual-threads.html)
+- [Semaphore API](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/Semaphore.html)
+
+## Code practice
+
+- [Examples — jab code revise karna ho](../../examples/java/16-concurrency-production.md)

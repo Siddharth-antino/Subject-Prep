@@ -1,0 +1,203 @@
+export const TRACKS = [
+  {
+    id: 'javascript',
+    name: 'JavaScript',
+    symbol: 'JS',
+    color: 'var(--track-javascript)',
+    tint: 'var(--tint-javascript)',
+    description: 'Web ke peeche ki language step-by-step samjho.',
+    mentor: 'Jonas Schmedtmann · topic companion',
+    topics: 'Fundamentals · async · the runtime',
+    icon: 'code',
+  },
+  {
+    id: 'react',
+    name: 'React',
+    symbol: '⚛',
+    color: 'var(--track-react)',
+    tint: 'var(--tint-react)',
+    description: 'Components mein socho aur khud UI banao.',
+    mentor: 'Jonas Schmedtmann · topic companion',
+    topics: 'Components · hooks · production apps',
+    icon: 'react',
+  },
+  {
+    id: 'react-native',
+    name: 'React Native',
+    symbol: 'RN',
+    color: 'var(--track-react-native)',
+    tint: 'var(--tint-react-native)',
+    description: 'React se Android aur iOS apps ke concepts samjho.',
+    mentor: 'React Native + Expo · official docs companion',
+    topics: 'Mobile UI · navigation · device APIs · releases',
+    icon: 'phone',
+  },
+  {
+    id: 'java',
+    name: 'Java',
+    symbol: 'J',
+    color: 'var(--track-java)',
+    tint: 'var(--tint-java)',
+    description: 'Java ki strong foundation examples se banao.',
+    mentor: 'Telusko · topic companion',
+    topics: 'OOP · collections · JVM · concurrency',
+    icon: 'coffee',
+  },
+  {
+    id: 'spring-boot',
+    name: 'Spring Boot',
+    symbol: 'SB',
+    color: 'var(--track-spring-boot)',
+    tint: 'var(--tint-spring-boot)',
+    description: 'Java web app banao, test karo aur deploy samjho.',
+    mentor: 'Spring documentation · practical learning path',
+    topics: 'Dependency injection · REST · JPA · security',
+    icon: 'layers',
+  },
+  {
+    id: 'mongodb',
+    name: 'Node & MongoDB',
+    symbol: 'M',
+    color: 'var(--track-mongodb)',
+    tint: 'var(--tint-mongodb)',
+    description: 'Data model samjho aur reliable backend banao.',
+    mentor: 'Jonas Schmedtmann · topic companion',
+    topics: 'Node.js · Express · MongoDB',
+    icon: 'database',
+  },
+  {
+    id: 'dsa',
+    name: 'Data structures & algorithms',
+    shortName: 'DSA',
+    symbol: '⌘',
+    color: 'var(--track-dsa)',
+    tint: 'var(--tint-dsa)',
+    description: 'Problems ke peeche ke patterns samjho.',
+    mentor: 'Colt Steele · topic companion',
+    topics: 'Patterns · trees · graphs · dynamic programming',
+    icon: 'network',
+  },
+  {
+    id: 'system-design',
+    name: 'System design',
+    symbol: '◇',
+    color: 'var(--track-system-design)',
+    tint: 'var(--tint-system-design)',
+    description: 'Requirements se recovery tak complete design samjho.',
+    mentor: 'React frontend + Java backend',
+    topics: 'Architecture · scale · real-world tradeoffs',
+    icon: 'layers',
+  },
+
+];
+
+export function parseFrontmatter(raw) {
+  const match = raw.replace(/\r\n/g, '\n').match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+  if (!match) return { body: raw };
+  const data = Object.fromEntries(
+    match[1]
+      .split('\n')
+      .filter((line) => line.includes(':'))
+      .map((line) => {
+        const split = line.indexOf(':');
+        return [
+          line.slice(0, split).trim(),
+          line
+            .slice(split + 1)
+            .trim()
+            .replace(/^['"]|['"]$/g, ''),
+        ];
+      }),
+  );
+  return {
+    ...data,
+    order: Number(data.order || 0),
+    minutes: Number(data.minutes || 8),
+    tags: (data.tags || '')
+      .split(',')
+      .map((tag) => tag.trim())
+      .filter(Boolean),
+    body: match[2].trim(),
+  };
+}
+
+export function headingId(text) {
+  const originalAnchors = {
+    'Mental model — simple soch': 'mental-model',
+    'Common mistakes — in galtiyon se bacho': 'common-mistakes',
+    'Preparation questions — bolkar practice karo': 'session-questions',
+    'Sources — aur padhne ke liye': 'sources',
+    'Revision and practice lab — khud karke samjho': 'revision-and-practice-lab',
+    'Aage badhne se pehle check karo': 'check-before-moving-on',
+  };
+  if (originalAnchors[text]) return originalAnchors[text];
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-');
+}
+
+export function extractHeadings(markdown) {
+  let fenced = false;
+  const headings = [];
+  for (const line of markdown.split('\n')) {
+    if (/^```/.test(line)) fenced = !fenced;
+    if (!fenced && /^## /.test(line)) {
+      const title = line.slice(3).replace(/[`*]/g, '').trim();
+      headings.push({ title, id: headingId(title) });
+    }
+  }
+  return headings;
+}
+
+export function legacyToMarkdown(raw, language = 'javascript') {
+  const cleaned = raw.replace(/^\s*['"]use strict['"];?\s*/i, '');
+  const blocks = [];
+  const re = /\/\*\*?([\s\S]*?)\*\//g;
+  let last = 0;
+  let match;
+  const code = (value) => {
+    if (value.trim()) blocks.push('```' + language + '\n' + value.trim() + '\n```');
+  };
+  while ((match = re.exec(cleaned))) {
+    code(cleaned.slice(last, match.index));
+    blocks.push(
+      match[1]
+        .split('\n')
+        .map((line) => line.replace(/^\s*\* ?/, ''))
+        .filter((line) => !/^\s*[=─━]{3,}\s*$/.test(line))
+        .join('\n')
+        .replace(/\[⚡ VISUAL\]/g, '')
+        .trim(),
+    );
+    last = re.lastIndex;
+  }
+  code(cleaned.slice(last));
+  return blocks.join('\n\n');
+}
+
+export function filterNotes(notes, { query = '', track = 'all', level = 'all' } = {}) {
+  const terms = query.toLowerCase().trim().split(/\s+/).filter(Boolean);
+  return notes.filter(
+    (note) =>
+      (track === 'all' || note.track === track) &&
+      (level === 'all' || note.level === level) &&
+      terms.every((term) =>
+        `${note.title} ${note.summary} ${note.tags?.join(' ')} ${note.body || ''} ${note.source || ''} ${note.searchText || ''}`
+          .toLowerCase()
+          .includes(term),
+      ),
+  );
+}
+
+export function normalizeProgress(value) {
+  const clean = (input) =>
+    Array.isArray(input) ? [...new Set(input.filter((item) => typeof item === 'string'))] : [];
+  return {
+    saved: clean(value?.saved),
+    completed: clean(value?.completed),
+    known: clean(value?.known),
+    recent: clean(value?.recent).slice(0, 8),
+  };
+}

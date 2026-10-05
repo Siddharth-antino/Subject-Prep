@@ -1,0 +1,18 @@
+{
+  "name": "subject-prep",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.12.0" },
+  "scripts": {
+    "setup": "npm ci --prefix server && npm ci --prefix playground",
+    "dev": "npm run dev:agent --prefix playground",
+    "start": "npm run server --prefix playground",
+    "build": "npm run build --prefix playground",
+    "preview": "npm run preview --prefix playground",
+    "test": "npm test --prefix playground",
+    "check": "npm run check --prefix playground",
+    "db:check": "npm run db:check --prefix playground",
+    "db:migrate": "npm run db:migrate --prefix playground"
+  }
+}

@@ -1,0 +1,21 @@
+# Local credentials and private session history
+.env
+.env.*
+!.env.example
+.sessions/
+.interviews/
+
+# Dependencies and generated output
+node_modules/
+dist/
+dist-ssr/
+coverage/
+*.log
+*.local
+
+# Machine-specific files
+.DS_Store
+.idea/
+.vscode/
+.codex/
+.agents/

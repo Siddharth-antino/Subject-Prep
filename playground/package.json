@@ -1,0 +1,41 @@
+{
+  "name": "subject-prep-web",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:agent": "node ../server/dev.mjs",
+    "server": "node ../server/index.mjs",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "node --test tests/*.test.mjs",
+    "test:agent": "node --test tests/preparation*.test.mjs",
+    "lint": "oxlint && npm run lint:agent",
+    "lint:agent": "cd .. && playground/node_modules/.bin/oxlint --config playground/.oxlintrc.json server",
+    "check": "npm test && npm run lint && npm run build",
+    "format": "prettier --write \"src/**/*.{js,jsx,css}\" \"tests/*.mjs\" vite.config.js",
+    "db:check": "node ../server/verify-mongo.mjs",
+    "db:migrate": "node ../server/migrate.mjs"
+  },
+  "dependencies": {
+    "lucide-react": "^1.44.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "react-markdown": "^10.1.0",
+    "react-router-dom": "^7.18.1",
+    "remark-gfm": "^4.0.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.3",
+    "jsdom": "^30.0.1",
+    "oxlint": "^1.71.0",
+    "prettier": "^3.9.6",
+    "vite": "^8.1.1"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

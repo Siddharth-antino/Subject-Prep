@@ -1,0 +1,60 @@
+---
+id: javascript-browser-foundations
+title: HTML CSS and browser rendering essentials
+track: javascript
+order: 11
+level: Foundation
+minutes: 2
+summary: HTML — structure; CSS — styling/layout; JS — behavior.
+tags: html, css, accessibility, browser, layout
+---
+
+## Quick revision
+
+- HTML — structure; CSS — styling/layout; JS — behavior.
+- Semantic HTML — action ke liye `button`, navigation ke liye `a` use karo.
+- Rendering — DOM + styles → layout → paint → composite.
+- Box model — content + padding + border; margin bahar ka gap.
+- `border-box` — width mein padding aur border included.
+- Flexbox — ek direction ka layout; Grid — rows aur columns ka layout.
+- Cascade — origin/layer/importance ke baad specificity aur source order matter karte hain.
+- `relative` — normal position se offset; `absolute` — containing block ke respect mein position.
+- Responsive — flexible sizes, media queries aur usable small-screen layout.
+- Accessibility — labels, keyboard access aur visible focus zaroori hain.
+- `defer` — classic external script parsing ke baad document order mein execute hota hai.
+- `async` script — ready hote hi execute; sibling scripts ka order guaranteed nahi.
+- Form labels — label ko input ID se jodo; placeholder label ka replacement nahi.
+
+### HTML essentials
+
+- Tag/element — tag markup boundary; element content/attributes wala parsed node.
+- Void element — img/input jaise elements ke child content aur closing tag nahi.
+- Lists — ul unordered, ol ordered, dl term/description pairs.
+- Class/id — class reuse hoti hai; id document mein unique rakho.
+- strong/em — importance/emphasis; b/i ka semantic purpose alag, sirf visual equivalent mat samjho.
+- head/body — metadata/resources head mein; page content body mein.
+- iframe — doosra document embed; sandbox, permissions aur framing policy check.
+- Target — _self current, _blank new context; rel=noopener opener relationship control karta hai.
+- link/a — link external resource relationship; a user navigation hyperlink.
+- Scripts — classic defer parse ke baad ordered; async ready hote hi; modules default deferred.
+- Audio/video — native controls, formats, captions aur autoplay restrictions handle.
+- Semantics — nav/main/article/section ka meaningful use; styling ke liye random semantic tag nahi.
+- header/h1 — header container hai; heading rank document hierarchy se choose.
+- Disabled field — normal form submission mein value include nahi hoti; readonly control ka behavior alag.
+- Button default — form ke andar button ka default submit ho sakta hai; non-submit action par type=button.
+- Native form — name wale enabled controls submit; label aur correct button type rakho.
+- Flex axes — justify-content main axis; align-items cross axis; direction badle toh axes bhi badalti hain.
+
+## Research notes: Semantic HTML before custom interaction
+
+- Navigation ke liye anchor, action ke liye button lo.
+
+## Sources — aur padhne ke liye
+
+- [Source yahan padho — MDN](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Accessibility/HTML)
+- [MDN CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
+- [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)
+
+## Code practice
+
+- [Examples — jab code revise karna ho](../../examples/javascript/11-browser-foundations.md)
